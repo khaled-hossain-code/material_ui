@@ -7,6 +7,7 @@ import _ from "lodash";
 export default class App extends Component {
   state = {
     excercises,
+    excercise: {},
     category: "all"
   };
 
@@ -18,13 +19,24 @@ export default class App extends Component {
     this.setState({ category });
   };
 
+  onSubCategory = SubCategoryId => {
+    this.setState(({ excercises }) => ({
+      excercise: excercises.find(ex => ex.id === SubCategoryId)
+    }));
+  };
+
   render() {
     const excerciseByMuscles = this.getExcercisesByMuscles(),
-      { category } = this.state;
+      { category, excercise } = this.state;
     return (
       <Fragment>
         <Header />
-        <Excercise excercises={excerciseByMuscles} category={category} />
+        <Excercise
+          excercises={excerciseByMuscles}
+          category={category}
+          excercise={excercise}
+          onSelect={this.onSubCategory}
+        />
         <Footer
           muscles={muscles}
           category={category}

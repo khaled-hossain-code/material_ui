@@ -19,7 +19,16 @@ style.paperLeft = {
   marginRight: 10
 };
 
-export default ({ excercises, category }) => (
+export default ({
+  excercises,
+  category,
+  excercise: {
+    id,
+    title = "Welcome!",
+    description = "Please select an excercise from the list on the left."
+  },
+  onSelect
+}) => (
   <Grid container>
     <Grid item sm>
       <Paper style={style.paperLeft}>
@@ -34,8 +43,8 @@ export default ({ excercises, category }) => (
                   {muscle}
                 </Typography>
                 <List component="ul">
-                  {excercise.map(({ title }) => (
-                    <ListItem button>
+                  {excercise.map(({ title, id }) => (
+                    <ListItem button onClick={() => onSelect(id)}>
                       <ListItemText primary={title} />
                     </ListItem>
                   ))}
@@ -47,9 +56,9 @@ export default ({ excercises, category }) => (
     </Grid>
     <Grid item sm>
       <Paper style={style.paperRight}>
-        <Typography variant="display1">Welcome!</Typography>
+        <Typography variant="display1">{title}</Typography>
         <Typography variant="subheading" style={{ marginTop: 20 }}>
-          Please select an excercise from the list on the left.
+          {description}
         </Typography>
       </Paper>
     </Grid>
